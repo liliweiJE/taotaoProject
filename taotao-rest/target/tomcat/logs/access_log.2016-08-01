@@ -1,0 +1,2 @@
+127.0.0.1 - - [01/Aug/2016:15:10:51 +0800] "GET /rest/search HTTP/1.1" 404 983 http-bio-8081-exec-1 3345
+127.0.0.1 - - [01/Aug/2016:15:14:37 +0800] "GET /rest/search HTTP/1.1" 404 983 http-bio-8081-exec-3 12

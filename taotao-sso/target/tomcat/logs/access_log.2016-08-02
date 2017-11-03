@@ -1,0 +1,6 @@
+127.0.0.1 - - [02/Aug/2016:10:59:18 +0800] "GET /page/register HTTP/1.1" 200 7674 http-bio-8084-exec-1 621
+127.0.0.1 - - [02/Aug/2016:10:59:33 +0800] "GET /user/check/li/1?r=0.5505861215406831 HTTP/1.1" 200 49 http-bio-8084-exec-6 408
+127.0.0.1 - - [02/Aug/2016:10:59:41 +0800] "GET /page/login HTTP/1.1" 200 4002 http-bio-8084-exec-7 117
+127.0.0.1 - - [02/Aug/2016:10:59:46 +0800] "POST /user/login HTTP/1.1" 404 949 http-bio-8084-exec-8 3
+127.0.0.1 - - [02/Aug/2016:10:59:48 +0800] "POST /user/login HTTP/1.1" 404 949 http-bio-8084-exec-9 2
+127.0.0.1 - - [02/Aug/2016:10:59:49 +0800] "POST /user/login HTTP/1.1" 404 949 http-bio-8084-exec-10 2

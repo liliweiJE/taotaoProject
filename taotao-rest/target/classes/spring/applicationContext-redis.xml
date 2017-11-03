@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<context:component-scan base-package="com.taotao.redis"/>
+	<context:annotation-config/>
+	
+	<!-- 连接池配置 -->
+	<bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig">
+		<!-- 最大连接数 -->
+		<property value="30" name="maxTotal" />
+		<!-- 最大空闲连接数 -->
+		<property value="10" name="maxIdle" />
+		<!-- 每次释放连接的最大数目 -->
+		<property value="1024" name="numTestsPerEvictionRun" />
+		<!-- 释放连接的扫描间隔（毫秒） -->
+		<property value="30000" name="timeBetweenEvictionRunsMillis" />
+		<!-- 连接最小空闲时间 -->
+		<property value="1800000" name="minEvictableIdleTimeMillis" />
+		<!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+		<property value="10000" name="softMinEvictableIdleTimeMillis" />
+		<!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+		<property value="1500" name="maxWaitMillis" />
+		<!-- 在获取连接的时候检查有效性, 默认false -->
+		<!-- <property value="true" name="testOnBorrow" /> -->
+		<!-- 在空闲时检查有效性, 默认false -->
+		<property value="true" name="testWhileIdle" />
+		<!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+		<property value="false" name="blockWhenExhausted" />
+	</bean>
+
+	 <bean id="redisClient" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="172.16.2.198"/>
+        <constructor-arg index="2" value="6379" type="int"/>
+    </bean>
+
+
+	<!-- jedis客户端单机版 -->
+	<!-- <bean id="redisClient" class="redis.clients.jedis.JedisPool">
+		<constructor-arg name="host" value="172.16.2.198" />
+		<constructor-arg name="port" value="6379" />
+		<property name="password" value="963369"/>
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+	</bean> -->
+	<bean id="jedisClient" class="com.taotao.dao.impl.JedisClientSingle"/> 
+	<!-- jedis集群版配置 -->
+	<!--
+	<bean class="redis.clients.jedis.JedisCluster" id="redisClient">
+		<constructor-arg name="nodes">
+			<set>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="192.168.25.153" name="host" />
+					<constructor-arg value="7001" name="port" />
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="192.168.25.153" name="host" />
+					<constructor-arg value="7002" name="port" />
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="192.168.25.153" name="host" />
+					<constructor-arg value="7003" name="port" />
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="192.168.25.153" name="host" />
+					<constructor-arg value="7004" name="port" />
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="192.168.25.153" name="host" />
+					<constructor-arg value="7005" name="port" />
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg value="192.168.25.153" name="host" />
+					<constructor-arg value="7006" name="port" />
+				</bean>
+			</set>
+		</constructor-arg>
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+	</bean>
+	-->
+	<bean id="pool" class="com.taotao.redis.RedisUtils"/>
+</beans>
